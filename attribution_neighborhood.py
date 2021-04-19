@@ -26,10 +26,11 @@ else:
     model=DanQ(args.label_size,args.seq_length,args.pre_length)
 device = torch.device( 'cuda:0' if torch.cuda.is_available() else'cpu')
 model.to(device)
-model.load_state_dict(torch.load(dir_path+'models/%s_auc_%s_v1.pt'%(args.pre_model,args.pre_length)))
+model.load_state_dict(torch.load('models/%s_auc_%s.pt'%(args.pre_model,args.pre_length)))
 graph_model=ECHO(args.label_size,args.k_adj,args.k_neigh)
 graph_model.to(device)
-graph_model.load_state_dict(torch.load(dir_path+'models/finetune/graph_auc_expecto_2600_50_10_0_v1.pt'))
+graph_model.load_state_dict(torch.load('models/echo_auc_%s_%s_%s_%s.pt' %
+                           (args.pre_model, args.pre_length, args.k_adj, args.k_neigh)))
 # graph_model.load_state_dict(torch.load(
 #      dir_path+'models/finetune/graph_auc_%s_%s_%s_%s_%s_%s.pt' %
 #                            (args.pre_model, args.pre_length, args.k_adj, args.k_neigh, args.k_second, args.version)))
@@ -69,8 +70,9 @@ else:
 contact_matrix = normalize(np.absolute(contact_matrix), norm='max', axis=1)
 contact_matrix.setdiag(0)
 
-# select contacts with high attribution scores
-m = contact_matrix.multiply(contact_matrix >= 0.7)
+# select contacts with high attribution scores,
+# the choose of the threshold is flexible depending on the number of contacts after filtering
+m = contact_matrix.multiply(contact_matrix >= 0.3)
 m=csr_matrix(m[label_locs,:])
 col=m.tocoo().col
 row=m.tocoo().row
@@ -101,7 +103,6 @@ for inters in interactions:
     idx=inters[0]
     neigh=inters[1]
     idx_neigh=np.where(adj_matrix[idx,:]==neigh)[0]
-    assert np.where(adj_matrix[idx,:]==idx)[0] ==55
     model.eval()
     graph_model.eval()
 # identify the binding events of the chromatin features from multiple cell lines
@@ -115,7 +116,7 @@ for inters in interactions:
     out = graph_model(xfea1, xfea2)
     feature_out=torch.mean(torch.sigmoid(out[:,feature_idx]),1)
 # make sure that the binding events are successfully predicted with high prediction scores
-    if feature_out>0.6:
+    if feature_out>0.4:
         out = torch.sum(out[:, feature_idx], 1)
         out.backward()
         grads =  input_fea.grad.data.cpu().detach().numpy()
@@ -125,6 +126,7 @@ for inters in interactions:
     if len(gradients) >=400:
         print('stopping')
         break
+print(len(gradients))
 if args.cell_line:
     np.save('%s_%s_grad.npy'%(args.cell_line,args.chromatin_feature),gradients)
     np.save('%s_%s_input.npy'%(args.cell_line,args.chromatin_feature),input_seqs)
