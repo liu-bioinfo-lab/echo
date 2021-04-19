@@ -19,11 +19,12 @@ parser.add_argument('--k_adj', type=int, default=50,help='number of spatial neig
 parser.add_argument('--k_neigh', type=int, default=10,help='number of sequential neighbors')
 parser.add_argument('--pre_model', type=str, choices=['deepsea','expecto','danq'], default='expecto')
 parser.add_argument('--metric', type=str, choices=['loss','auc'], default='loss')
-parser.add_argument('--checkpoint', default=False, action='store_true')
-parser.add_argument('--test', default=False, action='store_true')
+parser.add_argument('--load_model', default=False, action='store_true',help='load trained model')
+parser.add_argument('--test', default=False, action='store_true',help='model testing')
 args = parser.parse_args()
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+dir_path='/nfs/turbo/umms-drjieliu/usr/zzh/deepchrom/'
 def cal_auc(v):
     true, pred = v
     idx = np.where(true > 0)
@@ -44,7 +45,7 @@ def best_param(preds,targets,preserve):
     r = np.array(result.get())
     r=r[~np.isnan(r)].reshape(-1,2)
     if preserve:
-        np.save('compare_metrics/graph_%s.npy'%(args.pre_model),r)
+        np.save('compare_metrics/echo_%s.npy'%(args.pre_model),r)
     return np.mean(r[:,0]),np.mean(r[:,1])
 
 if torch.cuda.device_count()>1:
@@ -57,7 +58,8 @@ print(mode+' GPU training')
 train_chr=[1,4,5,6,7,9,10,11,13,14,15,16,17,18,19,20,22]
 valid_chr=[3,12]
 test_chr=[2,8,21]
-with open('hidden_feature/hidden_auc_%s_%s.pickle'%(args.pre_model,args.pre_length), 'rb') as f:
+dir_path='/nfs/turbo/umms-drjieliu/usr/zzh/deepchrom/'
+with open(dir_path+'hidden_feature/hidden_auc_%s_%s.pickle'%(args.pre_model,args.pre_length), 'rb') as f:
     hidden_feas=pickle.load(f)
 
 print('inputs load finished')
@@ -66,9 +68,9 @@ graph_model=ECHO(args.label_size,args.k_adj,args.k_neigh)
 if mode=='multi':
     graph_model=nn.DataParallel(graph_model)
 graph_model.to(device)
-if args.checkpoint:
+if args.load_model:
     print('load models')
-    graph_model.load_state_dict(torch.load('models/finetune/echo_loss_%s_%s_%s_%s.pt' %
+    graph_model.load_state_dict(torch.load(dir_path+'models/echo_auc_%s_%s_%s_%s.pt' %
         (args.pre_model, args.pre_length, args.k_adj, args.k_neigh)))
 
 optimizer = optim.SGD(graph_model.parameters(), lr=args.lr,momentum=0.9,weight_decay=1e-6)
@@ -76,7 +78,7 @@ loss_func = nn.BCEWithLogitsLoss()
 
 if args.test:
     print('model test')
-    graph_model.load_state_dict(torch.load('models/finetune/echo_loss_%s_%s_%s_%s.pt' %
+    graph_model.load_state_dict(torch.load(dir_path+'models/echo_auc_%s_%s_%s_%s.pt' %
                            (args.pre_model, args.pre_length, args.k_adj, args.k_neigh)))
 
     test_inputs = np.vstack([np.vstack((hidden_feas[chr], np.zeros((1, args.pre_length), dtype=np.float32)))
@@ -92,7 +94,7 @@ if args.test:
         xidx = test_x_idx.flatten()
         xfea = test_inputs[xidx, :].to(device)
         test_batch_y = test_batch_y.to(device)
-        xfea = xfea.reshape(test_batch_y.shape[0], args.k_adj + args.k_neigh + 1+args.k_second, args.length)
+        xfea = xfea.reshape(test_batch_y.shape[0], args.k_adj + args.k_neigh + 1, args.pre_length)
         xfea1 = xfea[:, :args.k_adj, :]
         xfea2 = xfea[:, args.k_adj:args.k_adj + args.k_neigh + 1, :]
         out = graph_model(xfea1, xfea2)
@@ -138,7 +140,7 @@ else:
             xidx =train_x_idx.flatten()
             xfea = train_inputs[xidx, :].to(device)
             train_batch_y = train_batch_y.to(device)
-            xfea=xfea.reshape(train_batch_y.shape[0],args.k_adj+args.k_neigh+1+args.k_second,args.length)
+            xfea=xfea.reshape(train_batch_y.shape[0],args.k_adj+args.k_neigh+1,args.pre_length)
             xfea1=xfea[:,:args.k_adj,:]
             xfea2=xfea[:,args.k_adj:args.k_adj+args.k_neigh+1,:]
             out = graph_model(xfea1, xfea2)
@@ -163,7 +165,7 @@ else:
             xidx = valid_x_idx.flatten()
             xfea= valid_inputs[xidx, :].to(device)
             valid_batch_y = valid_batch_y.to(device)
-            xfea=xfea.reshape(valid_batch_y.shape[0],args.k_adj+args.k_neigh+1+args.k_second,args.length)
+            xfea=xfea.reshape(valid_batch_y.shape[0],args.k_adj+args.k_neigh+1,args.pre_length)
             xfea1=xfea[:,:args.k_adj,:]
             xfea2=xfea[:,args.k_adj:args.k_adj+args.k_neigh+1,:]
             out = graph_model(xfea1, xfea2)
@@ -179,13 +181,13 @@ else:
         print('valid Loss is %s' % valid_loss)
         if valid_loss < best_loss:
             best_loss = valid_loss
-            torch.save(graph_model.state_dict(), 'models/finetune/echo_loss_%s_%s_%s_%s.pt' %
+            torch.save(graph_model.state_dict(), dir_path+'models/echo_loss_%s_%s_%s_%s.pt' %
                            (args.pre_model, args.pre_length, args.k_adj, args.k_neigh))
             print('save model')
         if auc_score > best_auc:
             auc_record = []
             best_auc = auc_score
-            torch.save(graph_model.state_dict(), 'models/finetune/echo_auc_%s_%s_%s_%s.pt' %
+            torch.save(graph_model.state_dict(), dir_path+'models/echo_auc_%s_%s_%s_%s.pt' %
                            (args.pre_model, args.pre_length, args.k_adj, args.k_neigh))
             print('save best auc')
         else:

@@ -9,8 +9,8 @@ valid_chr=[3,12]
 test_chr=[2,8,21]
 k_adj=50
 k_neigh=5
-
-with open('neighbor_list/hic_list_%s_%s_3.pickle'%(k_adj,k_neigh), 'rb') as f:
+dir_path='/nfs/turbo/umms-drjieliu/usr/zzh/deepchrom/'
+with open(dir_path+'neighbor_list/hic_list_%s_%s_3.pickle'%(k_adj,k_neigh), 'rb') as f:
     neighs = pickle.load(f)
 
 class TrainDataset(Dataset):
@@ -26,7 +26,7 @@ class TrainDataset(Dataset):
         self.x_idx=np.vstack([temp_dic[chr] for chr in train_chr])
         temp=[]
         for chr1 in train_chr:
-            yl = load_npz('labels/ihec_labels/chr%s.npz' % chr1)
+            yl = load_npz(dir_path+'labels/ihec_labels/chr%s.npz' % chr1)
             temp.append(yl.toarray())
         temp_y=np.vstack([temp[i] for i in range(len(temp))])
         self.y = torch.FloatTensor(temp_y)
@@ -49,7 +49,7 @@ class TestDataset(Dataset):
         self.x_idx = np.vstack([temp_dic[chr] for chr in test_chr])
         temp = []
         for chr1 in test_chr:
-            yl = load_npz('labels/ihec_labels/chr%s.npz' % chr1)
+            yl = load_npz(dir_path+'labels/ihec_labels/chr%s.npz' % chr1)
             temp.append(yl.toarray())
         temp_y = np.vstack([temp[i] for i in range(len(temp))])
         self.y = torch.FloatTensor(temp_y)
@@ -72,7 +72,7 @@ class ValidDataset(Dataset):
         self.x_idx = np.vstack([temp_dic[chr] for chr in valid_chr])
         temp = []
         for chr1 in valid_chr:
-            yl = load_npz('labels/ihec_labels/chr%s.npz' % chr1)
+            yl = load_npz(dir_path+'labels/ihec_labels/chr%s.npz' % chr1)
             temp.append(yl.toarray())
         temp_y = np.vstack([temp[i] for i in range(len(temp))])
         self.y = torch.FloatTensor(temp_y)

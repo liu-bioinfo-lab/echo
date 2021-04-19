@@ -17,7 +17,7 @@ parser.add_argument('--pre_model', type=str, choices=['deepsea','expecto','danq'
 parser.add_argument('--batchsize', type=int, default=64)
 parser.add_argument('--label_size', type=int, default=2583)
 parser.add_argument('--epochs', type=int, default=100)
-parser.add_argument('--checkpoint', default=False, action='store_true')
+parser.add_argument('--load_model', default=False, action='store_true',help='load trained model')
 parser.add_argument('--test', default=False, action='store_true')
 
 args = parser.parse_args()
@@ -62,9 +62,9 @@ if mode=='multi':
     model=nn.DataParallel(model)
 model.to(device)
 
-if args.checkpoint:
+if args.load_model:
     print('load models......')
-    model.load_state_dict(torch.load('models/%s_auc_%s_motif.pt'%(args.pre_model,args.length)))
+    model.load_state_dict(torch.load('models/%s_auc_%s.pt'%(args.pre_model,args.length)))
 optimizer = optim.SGD(model.parameters(), lr=args.lr,momentum=0.9,weight_decay=1e-6)
 # schedule = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer,factor=0.1, patience=5,verbose=1)
 
