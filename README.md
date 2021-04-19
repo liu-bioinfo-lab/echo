@@ -28,3 +28,9 @@ python hidden_extract.py
 ```bash
 python graph_train.py
 ```
+
+### Calculate attribution scores of contact matrix
+e.g. attribute CTCF labels to contact matrix
+```bash
+python attribution_contact.py --chromatin_feature= ctcf
+```
