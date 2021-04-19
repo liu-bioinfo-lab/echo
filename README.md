@@ -18,6 +18,7 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 
 ## Usage
+In ```\utils\```, we provide the code for pre-processing data
 ### Model training
 pre-train sequence layers 
 ```bash
