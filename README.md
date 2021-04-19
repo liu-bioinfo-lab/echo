@@ -31,7 +31,8 @@ training the graph layers with the extracted sequence hidden representations
 ```bash
 python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
 ```
-Add ```--load_model``` for loading trained models, add ```--test``` for model testing
+Add ```--load_model``` for loading trained models, add ```--test``` for model testing.
+
 In ```\models\```, we provide the trained models.
 ### Calculate attribution scores of Micro-C contact matrix
 e.g. attribute CTCF labels to the contact matrix
