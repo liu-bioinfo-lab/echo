@@ -27,11 +27,11 @@ extracting hidden representations using pre-trained sequence layers
 ```bash
 python hidden_extract.py
 ```
-training the graph layers with the extracted sequence hidden representations
+training the graph layers and prediction layer with the extracted sequence hidden representations
 ```bash
 python graph_train.py
 ```
-In ```\models\```, we provide the trained models.
+In ```\models\```, we provide the trained layers.
 ### Calculate attribution scores of Micro-C contact matrix
 e.g. attribute CTCF labels to the contact matrix
 ```bash 
