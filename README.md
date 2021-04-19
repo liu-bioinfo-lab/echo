@@ -36,14 +36,14 @@ Add ```--load_model``` for loading trained models, add ```--test``` for model te
 In ```\models\```, we provide the trained models.
 ### Calculate attribution scores of Micro-C contact matrix
 ```bash 
-python attribution_contact.py --chromatin_feature= ctcf --k_adj=50 --k_neigh=10
+python attribution_contact.py --chromatin_feature=ctcf --k_adj=50 --k_neigh=10
 ```
 ### Calculate attribution scores for the neighborhood 
 e.g. attribute GM12878 H3k4me3 to the neighbor sequences 
 
 First, get the corresponding attributed contact matrix
 ```bash
-python attribution_contact.py --chromatin_feature= h3k4me3 --cell_line=gm12878
+python attribution_contact.py --chromatin_feature=h3k4me3 --cell_line=gm12878
 ```
 Next, calculate the attribution scores for selected neighbor sequences, patterns can be learnen from the neighbor sequences by using the tool TF-MoDISco
 ```bash
