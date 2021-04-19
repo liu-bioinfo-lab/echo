@@ -3,7 +3,6 @@
 
 ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neural network based model to predict the chromatin features and characterize the collaboration among them in 3D chromatin organization. 
 
-## Overview
 ## Methods
 ### Model architecture
 ![Screenshot](./doc/architecture.png)
