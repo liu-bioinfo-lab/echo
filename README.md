@@ -19,18 +19,19 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 ## Usage
 ### Model training
-pre-train sequence layers
+pre-train sequence layers 
 ```bash
-python pre_train.py
+python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --seq_length=1000
 ```
-extracting hidden representations using pre-trained sequence layers
+extracting hidden representations using pre-trained sequence layers 
 ```bash
-python hidden_extract.py
+python hidden_extract.py --pre_model=expecto --length=2600
 ```
 training the graph layers with the extracted sequence hidden representations
 ```bash
-python graph_train.py
+python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
 ```
+Add ```--load_model``` for loading trained models, add ```--test``` for model testing
 In ```\models\```, we provide the trained models.
 ### Calculate attribution scores of Micro-C contact matrix
 e.g. attribute CTCF labels to the contact matrix
