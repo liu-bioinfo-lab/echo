@@ -47,5 +47,5 @@ python attribution_contact.py --chromatin_feature=h3k4me3 --cell_line=gm12878
 ```
 Next, calculate the attribution scores for selected neighbor sequences, patterns can be learnen from the neighbor sequences by using the tool TF-MoDISco
 ```bash
-python attribution_neighborhood.py --chromatin_feature= h3k4me3 --cell_line=gm12878
+python attribution_neighborhood.py --chromatin_feature=h3k4me3 --cell_line=gm12878
 ```
