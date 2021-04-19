@@ -15,16 +15,16 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 
 ## Usage
-### Pre-training the sequence layers
+### Model training
+pre-train sequence layers
 ```bash
 python pre_train.py
 ```
-### Extracting hidden representations using pre-trained sequence layers
+extracting hidden representations using pre-trained sequence layers
 ```bash
 python hidden_extract.py
 ```
-
-### Training or testing the graph models
+training the graph layers
 ```bash
 python graph_train.py
 ```
