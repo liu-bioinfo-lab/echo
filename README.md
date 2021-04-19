@@ -5,7 +5,7 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 ## Overview
 ## Methods
-![plot](./doc/archietecture.png)
+![plot](./doc/architecture.png)
 ## Dependencies
 
 *  python==3.8.5
