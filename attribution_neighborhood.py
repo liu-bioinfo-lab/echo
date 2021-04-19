@@ -116,6 +116,7 @@ for inters in interactions:
     out = graph_model(xfea1, xfea2)
     feature_out=torch.mean(torch.sigmoid(out[:,feature_idx]),1)
 # make sure that the binding events are successfully predicted with high prediction scores
+# the threshold is flexible depending on the number of neighbor sequences selected
     if feature_out>0.4:
         out = torch.sum(out[:, feature_idx], 1)
         out.backward()
