@@ -15,3 +15,4 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 
 ## Usage
+### Pre-training the sequence layers
