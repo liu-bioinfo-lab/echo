@@ -29,9 +29,9 @@ training the graph layers
 python graph_train.py
 ```
 
-### Calculate attribution scores of contact matrix
-e.g. attribute CTCF labels to contact matrix
-```bash
+### Calculate attribution scores of Micro-C contact matrix
+e.g. attribute CTCF labels to the contact matrix
+```bash 
 python attribution_contact.py --chromatin_feature= ctcf
 ```
 ### Calculate attribution scores for the neighborhood 
