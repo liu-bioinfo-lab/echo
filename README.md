@@ -24,7 +24,7 @@ extracting hidden representations using pre-trained sequence layers
 ```bash
 python hidden_extract.py
 ```
-training the graph layers
+training the graph layers with the extracted sequence hidden representations
 ```bash
 python graph_train.py
 ```
