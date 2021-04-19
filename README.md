@@ -34,3 +34,14 @@ e.g. attribute CTCF labels to contact matrix
 ```bash
 python attribution_contact.py --chromatin_feature= ctcf
 ```
+### Calculate attribution scores for the neighborhood 
+e.g. attribute GM12878 H3k4me3 to the neighbor sequence  
+
+First, get the corresponding attributed contact matrix
+```bash
+python attribution_contact.py --chromatin_feature= h3k4me3 --cell_line=gm12878
+```
+Next, calculate the attribution scores for neighbor sequences
+```bash
+python attribution_neighborhood.py --chromatin_feature= h3k4me3 --cell_line=gm12878
+```
