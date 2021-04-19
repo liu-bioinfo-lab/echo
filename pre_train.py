@@ -18,7 +18,7 @@ parser.add_argument('--batchsize', type=int, default=64)
 parser.add_argument('--label_size', type=int, default=2583)
 parser.add_argument('--epochs', type=int, default=100)
 parser.add_argument('--load_model', default=False, action='store_true',help='load trained model')
-parser.add_argument('--test', default=False, action='store_true')
+parser.add_argument('--test', default=False, action='store_true',help='model testing')
 
 args = parser.parse_args()
 if torch.cuda.device_count()>1:
@@ -129,6 +129,7 @@ else:
         model.eval()
         pred_eval = []
         target_eval = []
+        auc_record = []
         for step, (valid_batch_x, valid_batch_y) in enumerate(validloader):
             t = time.time()
             valid_batch_x = valid_batch_x.float().to(device)
@@ -149,6 +150,12 @@ else:
             torch.save(model.state_dict(),'models/%s_loss_%s.pt'%(args.pre_model,args.length))
             print('save model')
         if auc_score > best_auc:
+            auc_record = []
             best_auc = auc_score
             torch.save(model.state_dict(),'models/%s_auc_%s.pt'%(args.pre_model,args.length))
             print('save best auc')
+        else:
+            auc_record.append(auc_score)
+        if len(auc_record) >= 4:
+            print('Early stop')
+            break

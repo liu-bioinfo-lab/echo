@@ -71,6 +71,6 @@ for chr in range(1,23):
             align_ref[chr].append(idx)
         except Exception:
             pass
-    np.save('chr%s.npy' % chr, np.array(input_sequence, dtype=np.int8))
+    np.save('inputs/chr%s.npy' % chr, np.array(input_sequence, dtype=np.int8))
 with open('input_sample_poi.pickle','wb') as f:
     pickle.dump(align_ref,f)
