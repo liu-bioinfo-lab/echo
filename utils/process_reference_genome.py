@@ -20,5 +20,5 @@ for chr in range(1,23):
             continue
         chroms[chr][start]=text
     print('chr%s finished' % chr)
-with open('ref_genome_200bp.pickle', 'wb') as handle:
+with open(path+'ref_genome_200bp.pickle', 'wb') as handle:
     pickle.dump(chroms,handle)

@@ -46,7 +46,7 @@ def best_param(preds,targets,preserve):
     r = np.array(result.get())
     r=r[~np.isnan(r)].reshape(-1,2)
     if preserve:
-        np.save('compare_metrics/%s.npy'%(args.pre_model),r)
+        np.save('models/%s.npy'%(args.pre_model),r)
     return np.mean(r[:,0]),np.mean(r[:,1])
 
 train_chr=[1,4,5,6,7,9,10,11,13,14,15,16,17,18,19,20,22]

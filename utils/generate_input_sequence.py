@@ -3,10 +3,11 @@ from os.path import isfile, join
 import re
 import pickle
 import numpy as np
+
+dir_path='/nfs/turbo/umms-drjieliu/usr/zzh/deepchrom/'
 path='/nfs/turbo/umms-drjieliu/proj/4dn/data/Epigenomic_Data/chromatin_feature_hg38/tf'
 files_dir= [f for f in listdir(path)]
 print(len(files_dir))
-tf_align={}
 
 def find_locs(start,end):
     sets=[]
@@ -35,6 +36,7 @@ def encoding(text):
     for idx in range(len(text)):
         encode_text[one_hot_dic[text[idx]],idx]=1
     return encode_text
+tf_align={}
 for f in files_dir:
     if '.bed' in f:
         file=join(path,f)
@@ -71,6 +73,6 @@ for chr in range(1,23):
             align_ref[chr].append(idx)
         except Exception:
             pass
-    np.save('inputs/chr%s.npy' % chr, np.array(input_sequence, dtype=np.int8))
-with open('input_sample_poi.pickle','wb') as f:
+    np.save(dir_path+'inputs/chr%s.npy' % chr, np.array(input_sequence, dtype=np.int8))
+with open(dir_path+'input_sample_poi.pickle','wb') as f:
     pickle.dump(align_ref,f)

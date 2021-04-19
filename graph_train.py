@@ -45,7 +45,7 @@ def best_param(preds,targets,preserve):
     r = np.array(result.get())
     r=r[~np.isnan(r)].reshape(-1,2)
     if preserve:
-        np.save('compare_metrics/echo_%s.npy'%(args.pre_model),r)
+        np.save('models/echo_%s.npy'%(args.pre_model),r)
     return np.mean(r[:,0]),np.mean(r[:,1])
 
 if torch.cuda.device_count()>1:

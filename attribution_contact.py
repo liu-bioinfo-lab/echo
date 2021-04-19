@@ -34,11 +34,11 @@ files_hm= [f for f in listdir(path)]
 files_dir.extend(files_hm)
 label_idx=[]
 for i in range(len(files_dir)):
-    # cell-type specific
+# cell-type specific
     if args.cell_line:
         if args.cell_line.upper() in files_dir[i].upper() and args.chromatin_feature.upper() in files_dir[i].upper():
             label_idx.append(i)
-    # general chromatin features in all cell lines
+ # general chromatin features in all cell lines
     else:
         if args.chromatin_feature.upper() in files_dir[i].upper():
             label_idx.append(i)
@@ -53,7 +53,7 @@ print('inputs load finished')
 graph_model=ECHO(args.label_size,args.k_adj,args.k_neigh).to(device)
 # graph_model.load_state_dict(torch.load('models/finetune/echo_auc_%s_%s_%s_%s.pt' %
 #     (args.pre_model, args.pre_length, args.k_adj, args.k_neigh)))
-graph_model.load_state_dict(torch.load(dir_path+'models/finetune/graph_auc_expecto_2600_50_10_0_v1.pt'))
+graph_model.load_state_dict(torch.load('models/echo_auc_expecto_2600_50_10.pt'))
 graph_model.eval()
 loss_func = nn.BCEWithLogitsLoss()
 attribution_adj=[]

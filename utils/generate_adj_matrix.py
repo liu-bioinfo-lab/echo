@@ -2,8 +2,9 @@ import pickle
 import numpy as np
 from scipy.sparse import csr_matrix,load_npz,coo_matrix
 import scipy.sparse
+dir_path='/nfs/turbo/umms-drjieliu/usr/zzh/deepchrom/'
 contact_path='/nfs/turbo/umms-drjieliu/proj/4dn/data/reference_genome_hg38/microc_200bp/'
-with open('input_sample_poi.pickle','rb') as f:
+with open(dir_path+'input_sample_poi.pickle','rb') as f:
     seq_poi=pickle.load(f)
 signal_dic={}
 
@@ -51,7 +52,7 @@ def generate_contact(cell_line,chr):
         except Exception:
             pass
     cmap=csr_matrix((np.array(vals),(np.array(row),np.array(col))),shape=(lens,lens))
-    scipy.sparse.save_npz('%s_chr%s.npz'%(cell_line,chr),cmap)
+    scipy.sparse.save_npz(dir_path+'adj_matrix/%s_chr%s.npz'%(cell_line,chr),cmap)
 def maximum (A, B):
     BisBigger = A-B
     BisBigger.data = np.where(BisBigger.data < 0, 1, 0)
@@ -60,13 +61,13 @@ def merge_contact_maps():
     adjs = {}
     for chr in range(1,23):
         print(chr)
-        HFF_adj=load_npz('adj_matrix/HFF_chr%s.npz'%chr)
-        hESC_adj = load_npz('adj_matrix/hESC_chr%s.npz'%chr)
+        HFF_adj=load_npz(dir_path+'adj_matrix/HFF_chr%s.npz'%chr)
+        hESC_adj = load_npz(dir_path+'adj_matrix/hESC_chr%s.npz'%chr)
         adjs[chr]=maximum(HFF_adj,hESC_adj)
-    with open('adj_matrix/adjacency_matrix.pickle','wb') as f:
+    with open(dir_path+'adj_matrix/adjacency_matrix.pickle','wb') as f:
         pickle.dump(adjs,f)
 def filter_adjmatrix():
-    with open('adj_matrix/adjacency_matrix.pickle','rb') as f:
+    with open(dir_path+'adj_matrix/adjacency_matrix.pickle','rb') as f:
         adjs=pickle.load(f)
     top_matrix={}
     for chr in range(1,23):
@@ -84,5 +85,5 @@ def filter_adjmatrix():
         top_matrix[chr]=temp
         print(num)
         print(top_matrix[chr].nnz)
-    with open('adj_matrix/top_adjacency_matrix_2.pickle','wb') as f:
+    with open(dir_path+'adj_matrix/top_adjacency_matrix_2.pickle','wb') as f:
         pickle.dump(top_matrix,f)

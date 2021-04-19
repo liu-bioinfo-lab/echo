@@ -25,8 +25,8 @@ def find_locs(start,end):
         if end-(e-1)*200>=100:
             sets.append((e-1) * 200)
     return sets
-
-with open('input_sample_poi.pickle','rb') as f:
+dir_path='/nfs/turbo/umms-drjieliu/usr/zzh/deepchrom/'
+with open(dir_path+'input_sample_poi.pickle','rb') as f:
     seq_poi=pickle.load(f)
 def label_bins(feature_type):
     label_dics={}
@@ -76,5 +76,5 @@ for chr in range(1,23):
         temp.append(chromatin_feature_dic[ctype][chr])
     output_label = np.hstack([i for i in temp])
     output_label = csr_matrix(output_label)
-    save_npz('labels/chr%s.npz' % chr, output_label)
+    save_npz(dir_path+'labels/ihec_labels/chr%s.npz' % chr, output_label)
 

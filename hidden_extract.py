@@ -22,10 +22,11 @@ else:
     model=DanQ(args.label_size,args.seq_length,args.length)
 model.to(device)
 model.load_state_dict(torch.load('models/%s_auc_%s.pt'%(args.pre_model,args.length)))
+dir_path='/nfs/turbo/umms-drjieliu/usr/zzh/deepchrom/'
 hidden={}
 for chr in range(1,23):
     print(chr)
-    features=np.load('inputs/chr%s.npy'%chr)
+    features=np.load(dir_path+'inputs/chr%s.npy'%chr)
     model.eval()
     fea = torch.tensor(features).float()
     h_fea = np.zeros((fea.shape[0],args.length),dtype="float32")
@@ -44,5 +45,5 @@ for chr in range(1,23):
         temp_fea = xfea.cpu().data.detach().numpy()
         h_fea[cur_idx:, :] = np.float32(temp_fea)
     hidden[chr] = h_fea
-with open('hidden_feature/hidden_auc_%s_%s.pickle'%(args.pre_model,args.length),'wb') as f:
+with open(dir_path+'hidden_feature/hidden_auc_%s_%s.pickle'%(args.pre_model,args.length),'wb') as f:
     pickle.dump(hidden,f)
