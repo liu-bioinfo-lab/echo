@@ -19,3 +19,12 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 ```bash
 python pre_train.py
 ```
+### Extracting hidden representations using pre-trained sequence layers
+```bash
+python hidden_extract.py
+```
+
+### Training or testing the graph models
+```bash
+python graph_train.py
+```
