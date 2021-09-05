@@ -18,6 +18,7 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 
 ## Usage
+In ```\utils\```, we provide the code for pre-processing data
 ### Model training
 pre-train sequence layers 
 ```bash
@@ -35,6 +36,7 @@ Add ```--load_model``` for loading trained models, add ```--test``` for model te
 
 In ```\models\```, we provide the trained models.
 ### Calculate attribution scores of Micro-C contact matrix
+For the collected chromatin features profiles, please check  ```\doc\chromatin_feature_profiles.xlsx```
 ```bash 
 python attribution_contact.py --chromatin_feature=ctcf --k_adj=50 --k_neigh=10
 ```
