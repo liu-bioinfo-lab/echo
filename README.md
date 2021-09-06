@@ -36,7 +36,7 @@ curl -L -o hESC_Micro-C.zip "https://drive.google.com/uc?export=download&id=1aFK
 unzip hESC_Micro-C.zip
 ```
 
-Then we generate the input data ('inputs','neighs','input_sample_poi'), (p.s. if your uploaded ATAC-seq data is GRCh37(hg19), it will be converted to GRCh38(hg38))
+Then, you can generate the input data ('inputs','neighs','input_sample_poi'). p.s. if your uploaded ATAC-seq data is GRCh37(hg19), it will be converted to GRCh38(hg38).
 ```bash
 from util import *
 inputs,input_sample_poi=generate_input(ATAC_seq_file,version='hg38')
