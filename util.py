@@ -91,8 +91,6 @@ def model(inputs,neighs):
             att1.retain_grad()
             att2.retain_grad()
             indices = (torch.sigmoid(out)[:, :882] > threshold).to(device)
-            with open('/var/www/gkb/echo-web/log/log.txt','w') as f:
-                f.write('step:%s\n'%(step))
             if torch.sum(indices)<1:
                 central_idx=test_x_idx.numpy()[0,-6]
                 att_contacts[chr][central_idx] = {}
@@ -124,6 +122,8 @@ from pyliftover import LiftOver
 def process_bedfile(ATAC_file,version):
     atac_align={}
     lo = LiftOver('hg19', 'hg38')
+    if version not in ['hg19', 'hg38']:
+        raise ValueError('Invalid reference genome version Expected one of: %s'%(['hg19', 'hg38']))
     with open(ATAC_file,'r') as f:
         for line in f:
             content=line.strip().split('\t')
@@ -131,7 +131,7 @@ def process_bedfile(ATAC_file,version):
                 chromosome=int(content[0][3:])
                 if chromosome not in atac_align.keys():
                     atac_align[chromosome]=set()
-                if version == 'GRCh37(hg19)':
+                if version == 'hg19':
                     s = lo.convert_coordinate('chr%s' % chromosome, int(content[1]))[0][1]
                     e = lo.convert_coordinate('chr%s' % chromosome, int(content[2]))[0][1]
                 else:
@@ -157,10 +157,9 @@ def encoding(text):
     return encode_text
 
 
-def generate_input(ATAC_file,version):
+def generate_input(ATAC_file,version='hg38'):
     atac_align=process_bedfile(ATAC_file,version)
-    ref_gen_path = '/nfs/turbo/umms-drjieliu/proj/4dn/data/reference_genome_hg38/ref_genome_200bp.pickle'
-    with open(ref_gen_path, 'rb') as f:
+    with open('echo_data/ref_genome_200bp.pickle', 'rb') as f:
         ref_genome = pickle.load(f)
     inputs = {}
     for chr in atac_align.keys():
@@ -219,13 +218,9 @@ def maximum (A, B):
 def generate_contact_map(input_sample_poi):
     contact_maps = {}
     for chr in input_sample_poi.keys():
-        with open('/nfs/turbo/umms-drjieliu/proj/4dn/data/'
-                  'reference_genome_hg38/microc_200bp'
-                  '/hESC_chr%s.pickle' % chr, 'rb') as f:
+        with open('echo_data/hESC_chr%s.pickle' % chr, 'rb') as f:
             hesc_maps = pickle.load(f)
-        with open('/nfs/turbo/umms-drjieliu/proj/4dn/data/'
-                  'reference_genome_hg38/microc_200bp'
-                  '/HFF_chr%s.pickle' % chr, 'rb') as f:
+        with open('echo_data/HFF_chr%s.pickle' % chr, 'rb') as f:
             HFF_maps = pickle.load(f)
         hesc_cmap = build_graph(input_sample_poi,hesc_maps, chr, 'hESC')
         HFF_cmap = build_graph(input_sample_poi,HFF_maps, chr, 'HFF')
