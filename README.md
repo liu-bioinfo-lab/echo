@@ -45,6 +45,15 @@ neighs= generate_neighbors(input_sample_poi)
 
 To run the analysis, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
 
+If you want to train the model, you can use the following codes 
+
+```bash 
+python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --seq_length=1000
+python hidden_extract.py --pre_model=expecto --length=2600
+python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
+```
+
+
 <!-- ## Usage
 In ```\utils\```, we provide the code for pre-processing data
 ### Model training
