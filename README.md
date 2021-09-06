@@ -16,7 +16,7 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 *  numpy==1.19.2
 *  scipy==1.5.2 -->
 
-Please see [This is an absolute link to a nested folder](https://notebooks.azure.com/anon-jhu4eq/libraries/ReadmeLinkingTest/tree/testfolde
+Please see (https://github.com/liu-bioinfo-lab/echo/blob/main/echo_example.ipynb)
 
 <!-- ## Usage
 In ```\utils\```, we provide the code for pre-processing data
