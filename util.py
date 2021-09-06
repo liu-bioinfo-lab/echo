@@ -17,7 +17,7 @@ class Dataset2(Dataset):
 
 
 
-def echo_attribute(inputs,neighs):
+def echo_attribute(inputs,neighs,threshold):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print(device)
     model = Expecto(2583, 1000, 2600)
@@ -60,7 +60,6 @@ def echo_attribute(inputs,neighs):
                     if grad_atts[idx,nidx]>att_contacts[chr][central_idx][neighbor_idx[idx, nidx]]:
                         att_contacts[chr][central_idx][neighbor_idx[idx, nidx].item()] = grad_atts[idx, nidx].item()
                         att_neighs[chr][central_idx][neighbor_idx[idx, nidx].item()] = grad_seq[idx, nidx, :, :]
-    threshold = 0.2
     for chr in inputs.keys():
         tempo = []
         pad_idx = inputs[chr].shape[0]
