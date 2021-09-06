@@ -16,7 +16,7 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 *  numpy==1.19.2
 *  scipy==1.5.2 -->
 
-Please see [a relative link](echo_example.ipynb)
+Please see [echo_example.ipynb](echo_example.ipynb)
 
 <!-- ## Usage
 In ```\utils\```, we provide the code for pre-processing data
