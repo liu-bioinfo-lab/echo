@@ -388,7 +388,7 @@ def plot_weights_given_ax(tick,ax, array,
     ax.spines['left'].set_visible(False)
     ax.set_title('Attribution scores on the sequence '+str(tick)+'-'+
                 str(tick+200)+' bp with the flanking region ' +
-                '\naccording to TF binding on the central sequence')
+                '\naccording to TF binding on the central sequence',fontsize=80)
 
 
 def plot_weights(array,tick,
