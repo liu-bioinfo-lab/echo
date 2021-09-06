@@ -29,14 +29,24 @@ To perform your own analysis, you only need to provide an ATAC-seq file in (.bed
 The chromatin contacts data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps. The trained models are stored in (https://github.com/liu-bioinfo-lab/echo/tree/main/models).
 
 First, you need to download the Micro-C contact maps and GRCh38 reference genome data
+
 ```bash
-curl -L -o reference_genome.zip "https://drive.google.com/uc?export=download&id=11NXyB2FNehMRw_lbCe7_Ymlp86w5TQdR"
+pip install gdown
+mkdir echo_data
+gdown --id 1XAGqlZsZJ6CY2wQMVVvNXnlnVL9iEmtf --output HFF_Micro-C.zip
+unzip HFF_Micro-C.zip -d echo_data
+gdown --id 1aFK1wadoZ1h0Y0f6UTp76XWcbN5xqGe3 --output hESC_Micro-C.zip
+unzip hESC_Micro-C.zip -d echo_data
+gdown --id 11NXyB2FNehMRw_lbCe7_Ymlp86w5TQdR --output reference_genome.zip
+unzip reference_genome.zip -d echo_data
+```
+<!-- curl -L -o reference_genome.zip "https://drive.google.com/uc?export=download&id=11NXyB2FNehMRw_lbCe7_Ymlp86w5TQdR"
 unzip reference_genome.zip
 curl -L -o HFF_Micro-C.zip "https://drive.google.com/uc?export=download&id=1XAGqlZsZJ6CY2wQMVVvNXnlnVL9iEmtf"
 unzip HFF_Micro-C.zip
 curl -L -o hESC_Micro-C.zip "https://drive.google.com/uc?export=download&id=1aFK1wadoZ1h0Y0f6UTp76XWcbN5xqGe3"
 unzip hESC_Micro-C.zip
-```
+ -->
 
 Then, you can generate the input data ('inputs','neighs','input_sample_poi'). p.s. if your uploaded ATAC-seq data is GRCh37(hg19), it will be converted to GRCh38(hg38).
 ```bash
