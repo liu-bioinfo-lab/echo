@@ -17,7 +17,7 @@ class Dataset2(Dataset):
 
 
 
-def model(inputs,neighs):
+def echo_attribute(inputs,neighs):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print(device)
     model = Expecto(2583, 1000, 2600)
