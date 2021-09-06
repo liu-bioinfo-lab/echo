@@ -5,10 +5,11 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 ## Methods
 ### Model architecture
-<img src="./doc/architecture.png" alt="drawing" style="width:200px;"/>
+<img src="./doc/architecture.png" alt="drawing" style="width:400px;"/>
 <!-- ![Screenshot](./doc/architecture.png){:height="50%" width="50%"} -->
 ### Applying attribution methods to ECHO
-![Screenshot](./doc/attribution.png){:height="50%" width="50%"}
+<img src="./doc/attribution.png" alt="attribution" style="width:400px;"/>
+<!-- ![Screenshot](./doc/attribution.png){:height="50%" width="50%"} -->
 <!-- ## Dependencies
 
 *  python==3.8.5
