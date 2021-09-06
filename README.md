@@ -5,19 +5,68 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 ## Methods
 ### Model architecture
-![Screenshot](./doc/architecture.png)
+
+<div align=center><img src="./doc/architecture.png" width="600px"></div>
+
 ### Applying attribution methods to ECHO
-![Screenshot](./doc/attribution.png)
-## Dependencies
+
+<div align=center><img src="./doc/attribution.png" width="600px"></div>
+
+<!-- ## Dependencies
 
 *  python==3.8.5
 *  torch==1.7.1
 *  scikit-learn==0.23.2
 *  numpy==1.19.2
-*  scipy==1.5.2
-
+*  scipy==1.5.2 -->
 
 ## Usage
+
+Please see [echo_example.ipynb](echo_example.ipynb) for an example to calulate prediction scores for the central sequence and attribution scores on chromatin contacts and neighbor sequences.
+
+To perform your own analysis, you only need to provide an ATAC-seq file in (.bed) format. 
+
+The chromatin contacts data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps. The trained models are stored in (https://github.com/liu-bioinfo-lab/echo/tree/main/models).
+
+First, you need to download the Micro-C contact maps and GRCh38 reference genome data
+
+```bash
+pip install gdown
+mkdir echo_data
+gdown --id 1XAGqlZsZJ6CY2wQMVVvNXnlnVL9iEmtf --output HFF_Micro-C.zip
+unzip HFF_Micro-C.zip -d echo_data
+gdown --id 1aFK1wadoZ1h0Y0f6UTp76XWcbN5xqGe3 --output hESC_Micro-C.zip
+unzip hESC_Micro-C.zip -d echo_data
+gdown --id 11NXyB2FNehMRw_lbCe7_Ymlp86w5TQdR --output reference_genome.zip
+unzip reference_genome.zip -d echo_data
+```
+<!-- curl -L -o reference_genome.zip "https://drive.google.com/uc?export=download&id=11NXyB2FNehMRw_lbCe7_Ymlp86w5TQdR"
+unzip reference_genome.zip
+curl -L -o HFF_Micro-C.zip "https://drive.google.com/uc?export=download&id=1XAGqlZsZJ6CY2wQMVVvNXnlnVL9iEmtf"
+unzip HFF_Micro-C.zip
+curl -L -o hESC_Micro-C.zip "https://drive.google.com/uc?export=download&id=1aFK1wadoZ1h0Y0f6UTp76XWcbN5xqGe3"
+unzip hESC_Micro-C.zip
+ -->
+
+Then, you can generate the input data ('inputs','neighs','input_sample_poi'). p.s. if your uploaded ATAC-seq data is GRCh37(hg19), it will be converted to GRCh38(hg38).
+```bash
+from util import *
+inputs,input_sample_poi=generate_input(ATAC_seq_file,version='hg38')
+neighs= generate_neighbors(input_sample_poi)
+```
+
+To run the analysis, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
+
+Refer to the code below, if you want to train the model from scratch. 
+
+```bash 
+python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --seq_length=1000
+python hidden_extract.py --pre_model=expecto --length=2600
+python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
+```
+
+
+<!-- ## Usage
 In ```\utils\```, we provide the code for pre-processing data
 ### Model training
 pre-train sequence layers 
@@ -51,3 +100,4 @@ Next, calculate the attribution scores for selected neighbor sequences, patterns
 ```bash
 python attribution_neighborhood.py --chromatin_feature=h3k4me3 --cell_line=gm12878
 ```
+ -->
