@@ -6,7 +6,7 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 ## Methods
 ### Model architecture
 
-<img src="./doc/architecture.png" width="500px">
+<div align=center><img src="./doc/architecture.png" width="500px"></div>
 
 ### Applying attribution methods to ECHO
 
