@@ -24,6 +24,18 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 Please see [echo_example.ipynb](echo_example.ipynb) for an example to calulate prediction scores for the central sequence and attribution scores on chromatin contacts and neighbor sequences.
 
+To perform your own analysis, you only need to provide an ATAC-seq file in (.bed) format. The chromatin contacts data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps.
+
+First, you need to download the Micro-C contact maps and GRCh38 reference genome data
+```bash
+curl -L -o reference_genome.zip "https://drive.google.com/uc?export=download&id=11NXyB2FNehMRw_lbCe7_Ymlp86w5TQdR"
+unzip reference_genome.zip
+curl -L -o HFF_Micro-C.zip "https://drive.google.com/uc?export=download&id=1XAGqlZsZJ6CY2wQMVVvNXnlnVL9iEmtf"
+unzip HFF_Micro-C.zip
+curl -L -o hESC_Micro-C.zip "https://drive.google.com/uc?export=download&id=1aFK1wadoZ1h0Y0f6UTp76XWcbN5xqGe3"
+unzip hESC_Micro-C.zip
+```
+
 <!-- ## Usage
 In ```\utils\```, we provide the code for pre-processing data
 ### Model training
