@@ -43,6 +43,8 @@ inputs,input_sample_poi=generate_input(ATAC_seq_file,version='hg38')
 neighs= generate_neighbors(input_sample_poi)
 ```
 
+To run the analysis, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
+
 <!-- ## Usage
 In ```\utils\```, we provide the code for pre-processing data
 ### Model training
