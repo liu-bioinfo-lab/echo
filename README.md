@@ -55,7 +55,9 @@ inputs,input_sample_poi=generate_input(ATAC_seq_file,version='hg38')
 neighs= generate_neighbors(input_sample_poi)
 ```
 
-To run the analysis, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
+Finally, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
+
+Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for an example to find common motif patterns of the chromatin features in the nerighborhood.
 
 Refer to the code below, if you want to train the model from scratch. 
 
