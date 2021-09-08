@@ -94,7 +94,7 @@ def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_
         input_fea = torch.tensor(input_fea).float()
         for step, (test_x_idx) in enumerate(dataloader):
             xidx = test_x_idx.flatten()
-            central_seq_idx = binding_locs[xidx[55]]
+            central_seq_idx = xidx[55]
             input_xfea = input_fea[xidx, :, :].to(device)
             input_xfea.requires_grad = True
             _, xfea = model(input_xfea)
