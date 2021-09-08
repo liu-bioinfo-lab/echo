@@ -49,7 +49,7 @@ class Dataset2(Dataset):
         return self.num
 
 
-def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_threshold=0.4, score_threshold=0.3,seq_threshold=300):
+def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_threshold=0.4, score_threshold=0.3):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print(device)
     model = Expecto(2583, 1000, 2600)
@@ -88,13 +88,13 @@ def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_
         pad_idx = inputs[chr].shape[0]
         binding_locs = find_binding_locs(inspect_tf, labels, chr)
         print(binding_locs.shape)
-        dataloader = DataLoader(dataset=Dataset2(neighs, chr, binding_locs), batch_size=1, shuffle=True)
+        dataloader = DataLoader(dataset=Dataset2(neighs, chr, binding_locs), batch_size=1, shuffle=False, num_workers=2)
         input_fea = inputs[chr]
         input_fea = np.vstack((input_fea, np.zeros((1, 4, 1000), dtype=np.int8)))
         input_fea = torch.tensor(input_fea).float()
         for step, (test_x_idx) in enumerate(dataloader):
+            central_seq_idx = binding_locs[step]
             xidx = test_x_idx.flatten()
-            central_seq_idx = xidx[55]
             input_xfea = input_fea[xidx, :, :].to(device)
             input_xfea.requires_grad = True
             _, xfea = model(input_xfea)
@@ -145,6 +145,4 @@ def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_
             sequence_grad.append(grads)
             sequence_input.append(input_seq)
             print('%s sequences are found' % num_sequences)
-            if num_sequences > seq_threshold:
-                return np.vstack(sequence_grad), np.vstack(sequence_input)
     return np.vstack(sequence_grad), np.vstack(sequence_input)
