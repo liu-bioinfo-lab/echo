@@ -88,13 +88,13 @@ def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_
         pad_idx = inputs[chr].shape[0]
         binding_locs = find_binding_locs(inspect_tf, labels, chr)
         print(binding_locs.shape)
-        dataloader = DataLoader(dataset=Dataset2(neighs, chr, binding_locs), batch_size=1, shuffle=False, num_workers=2)
+        dataloader = DataLoader(dataset=Dataset2(neighs, chr, binding_locs), batch_size=1, shuffle=True)
         input_fea = inputs[chr]
         input_fea = np.vstack((input_fea, np.zeros((1, 4, 1000), dtype=np.int8)))
         input_fea = torch.tensor(input_fea).float()
         for step, (test_x_idx) in enumerate(dataloader):
-            central_seq_idx = binding_locs[step]
             xidx = test_x_idx.flatten()
+            central_seq_idx = binding_locs[xidx[55]]
             input_xfea = input_fea[xidx, :, :].to(device)
             input_xfea.requires_grad = True
             _, xfea = model(input_xfea)
