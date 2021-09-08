@@ -3,14 +3,6 @@
 
 ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neural network based model to predict the chromatin features and characterize the collaboration among them in 3D chromatin organization. 
 
-## Methods
-### Model architecture
-
-<div align=center><img src="./doc/architecture.png" width="600px"></div>
-
-### Applying attribution methods to ECHO
-
-<div align=center><img src="./doc/attribution.png" width="600px"></div>
 
 <!-- ## Dependencies
 
@@ -22,11 +14,13 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 ## Usage
 
+For the usage of ECHO, we make two examples [echo_example.ipynb](echo_example.ipynb) and [neighborhood_motif.ipynb](neighborhood_motif.ipynb).
+
 Please see [echo_example.ipynb](echo_example.ipynb) for an example to calulate prediction scores for the central sequence and attribution scores on chromatin contacts and neighbor sequences.
 
 To perform your own analysis, you only need to provide an ATAC-seq file in (.bed) format. 
 
-The chromatin contacts data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps. The trained models are stored in (https://github.com/liu-bioinfo-lab/echo/tree/main/models).
+The chromatin contacts data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps. The trained models are stored in https://github.com/liu-bioinfo-lab/echo/tree/main/models.
 
 First, you need to download the Micro-C contact maps and GRCh38 reference genome data
 
@@ -55,7 +49,9 @@ inputs,input_sample_poi=generate_input(ATAC_seq_file,version='hg38')
 neighs= generate_neighbors(input_sample_poi)
 ```
 
-To run the analysis, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
+Finally, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
+
+Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for an example to find common motif patterns in the nerighborhood for the inverstigated chromatin feature using [TF-MoDISco (Shrikumar et al.)](https://github.com/kundajelab/tfmodisco).
 
 Refer to the code below, if you want to train the model from scratch. 
 
@@ -64,6 +60,15 @@ python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --
 python hidden_extract.py --pre_model=expecto --length=2600
 python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
 ```
+
+## Methods
+### Model architecture
+
+<div align=center><img src="./doc/architecture.png" width="600px"></div>
+
+### Applying attribution methods to ECHO
+
+<div align=center><img src="./doc/attribution.png" width="600px"></div>
 
 
 <!-- ## Usage
