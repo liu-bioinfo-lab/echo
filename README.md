@@ -51,7 +51,7 @@ neighs= generate_neighbors(input_sample_poi)
 
 Finally, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb).
 
-Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for an example to find common motif patterns of the chromatin features in the nerighborhood using [TF-MoDISco (Shrikumar et al.)](https://github.com/kundajelab/tfmodisco).
+Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for an example to find common motif patterns in the nerighborhood for the inverstigated chromatin feature using [TF-MoDISco (Shrikumar et al.)](https://github.com/kundajelab/tfmodisco).
 
 Refer to the code below, if you want to train the model from scratch. 
 
