@@ -3,14 +3,6 @@
 
 ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neural network based model to predict the chromatin features and characterize the collaboration among them in 3D chromatin organization. 
 
-## Methods
-### Model architecture
-
-<div align=center><img src="./doc/architecture.png" width="600px"></div>
-
-### Applying attribution methods to ECHO
-
-<div align=center><img src="./doc/attribution.png" width="600px"></div>
 
 <!-- ## Dependencies
 
@@ -68,6 +60,15 @@ python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --
 python hidden_extract.py --pre_model=expecto --length=2600
 python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
 ```
+
+## Methods
+### Model architecture
+
+<div align=center><img src="./doc/architecture.png" width="600px"></div>
+
+### Applying attribution methods to ECHO
+
+<div align=center><img src="./doc/attribution.png" width="600px"></div>
 
 
 <!-- ## Usage
