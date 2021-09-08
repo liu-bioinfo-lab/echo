@@ -22,6 +22,8 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 ## Usage
 
+For the usage of ECHO, we make two examples [echo_example.ipynb](echo_example.ipynb) and [neighborhood_motif.ipynb](neighborhood_motif.ipynb).
+
 Please see [echo_example.ipynb](echo_example.ipynb) for an example to calulate prediction scores for the central sequence and attribution scores on chromatin contacts and neighbor sequences.
 
 To perform your own analysis, you only need to provide an ATAC-seq file in (.bed) format. 
