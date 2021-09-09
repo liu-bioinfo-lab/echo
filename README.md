@@ -77,7 +77,7 @@ gdown --id 1nx8pRvG5CWkGQINS_f5Uk451A0Tt4NY5 --output neighbors_data.zip
 unzip neighbors_data.zip
 ```
 
-The inputs data can be generated using the codes below with the downloaded reference genome data 
+The input sequence data can be generated using the codes below with the downloaded reference genome data 
 ```bash
 from util1 import generate_inputs
 import pickle
