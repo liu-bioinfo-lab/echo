@@ -12,6 +12,8 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 *  numpy==1.19.2
 *  scipy==1.5.2 -->
 
+For the collected chromatin features profiles, please see [chromatin_feature_profiles.xlsx](\doc\chromatin_feature_profiles.xlsx)
+
 ## Usage
 
 For the usage of ECHO, we make two examples [echo_example.ipynb](echo_example.ipynb) and [neighborhood_motif.ipynb](neighborhood_motif.ipynb).
