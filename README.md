@@ -69,12 +69,25 @@ For the collected chromatin features profiles, please see [chromatin_feature_pro
 
 Please see https://drive.google.com/drive/folders/1rI9WRPb_MwM36sW6AH7INC63Vo5fVelb?usp=sharing for the data of labels
 
-The neighhood data can be downloaded using the command lines below
+Our neighhood data can be downloaded using the command lines below
 
 ```bash
 pip install gdown
 gdown --id 1nx8pRvG5CWkGQINS_f5Uk451A0Tt4NY5 --output neighbors_data.zip
 unzip neighbors_data.zip
+```
+
+The inputs data can be generated using the codes below with the downloaded reference genome data 
+```bash
+from util1 import generate_inputs
+import pickle
+with open('example/input_sample_poi.pickle','rb') as f:
+  input_sample_poi=pickle.load(f)
+with open('echo_data/ref_genome_200bp.pickle','rb') as f:
+  ref_genome=pickle.load(f)
+inputs={}
+for chr in range(1,23):
+  inputs[chr]=generate_inputs(input_sample_poi,chr,ref_genome)
 ```
 
 ## Methods
