@@ -67,6 +67,16 @@ python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_mode
 
 For the collected chromatin features profiles, please see [chromatin_feature_profiles.xlsx](https://github.com/liu-bioinfo-lab/echo/blob/main/doc/chromatin_feature_profiles.xlsx)
 
+Please see https://drive.google.com/drive/folders/1rI9WRPb_MwM36sW6AH7INC63Vo5fVelb?usp=sharing for the data of labels
+
+The neighhood data can be downloaded using the command lines below
+
+```bash
+pip install gdown
+gdown --id 1nx8pRvG5CWkGQINS_f5Uk451A0Tt4NY5 --output neighbors_data.zip
+unzip neighbors_data.zip
+```
+
 ## Methods
 ### Model architecture
 
