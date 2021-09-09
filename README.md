@@ -12,6 +12,15 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 *  numpy==1.19.2
 *  scipy==1.5.2 -->
 
+## Methods
+### Model architecture
+
+<div align=center><img src="./doc/architecture.png" width="600px"></div>
+
+### Applying attribution methods to ECHO
+
+<div align=center><img src="./doc/attribution.png" width="600px"></div>
+
 
 ## Usage
 
@@ -97,14 +106,6 @@ gdown --id 1nx8pRvG5CWkGQINS_f5Uk451A0Tt4NY5 --output neighbors_data.zip
 unzip neighbors_data.zip
 ```
 
-## Methods
-### Model architecture
-
-<div align=center><img src="./doc/architecture.png" width="600px"></div>
-
-### Applying attribution methods to ECHO
-
-<div align=center><img src="./doc/attribution.png" width="600px"></div>
 
 
 <!-- ## Usage
