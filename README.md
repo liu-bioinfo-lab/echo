@@ -12,7 +12,6 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 *  numpy==1.19.2
 *  scipy==1.5.2 -->
 
-For the collected chromatin features profiles, please see [chromatin_feature_profiles.xlsx](https://github.com/liu-bioinfo-lab/echo/blob/main/doc/chromatin_feature_profiles.xlsx)
 
 ## Usage
 
@@ -62,6 +61,11 @@ python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --
 python hidden_extract.py --pre_model=expecto --length=2600
 python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
 ```
+
+
+## Data
+
+For the collected chromatin features profiles, please see [chromatin_feature_profiles.xlsx](https://github.com/liu-bioinfo-lab/echo/blob/main/doc/chromatin_feature_profiles.xlsx)
 
 ## Methods
 ### Model architecture
