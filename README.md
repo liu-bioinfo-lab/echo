@@ -62,10 +62,17 @@ python hidden_extract.py --pre_model=expecto --length=2600
 python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
 ```
 
+### Attribution scores on chromatin contacts according to certain chromatin feature prediction
+e.g. attribute GM12878 H3k4me3 prediction to chromatin contacts
+
+```bash
+python attribution_contact.py --chromatin_feature=h3k4me3 --cell_line=gm12878
+```
+
 
 ## Data
 
-For the collected chromatin features profiles, please see [chromatin_feature_profiles.xlsx](https://github.com/liu-bioinfo-lab/echo/blob/main/doc/chromatin_feature_profiles.xlsx)
+For the collected chromatin feature profiles, please see [chromatin_feature_profiles.xlsx](https://github.com/liu-bioinfo-lab/echo/blob/main/doc/chromatin_feature_profiles.xlsx)
 
 Please see https://drive.google.com/drive/folders/1rI9WRPb_MwM36sW6AH7INC63Vo5fVelb?usp=sharing for the label data.
 
