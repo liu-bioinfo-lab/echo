@@ -61,13 +61,13 @@ python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --
 python hidden_extract.py --pre_model=expecto --length=2600
 python graph_train.py --lr=0.5 --batchsize=64 --k_adj=50 --k_neigh=10 --pre_model=expecto
 ```
-
+<!-- 
 ### Attribution scores on chromatin contacts according to certain chromatin feature prediction
 e.g. attribute GM12878 H3k4me3 prediction to chromatin contacts
 
 ```bash
 python attribution_contact.py --chromatin_feature=h3k4me3 --cell_line=gm12878
-```
+``` -->
 
 
 ## Data
