@@ -87,8 +87,9 @@ def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_
     for chr in inputs.keys():
         pad_idx = inputs[chr].shape[0]
         binding_locs = find_binding_locs(inspect_tf, labels, chr)
-        print(binding_locs.shape)
+        print('%s binding sites are found'%binding_locs.shape[0])
         dataloader = DataLoader(dataset=Dataset2(neighs, chr, binding_locs), batch_size=1, shuffle=False, num_workers=2)
+
         input_fea = inputs[chr]
         input_fea = np.vstack((input_fea, np.zeros((1, 4, 1000), dtype=np.int8)))
         input_fea = torch.tensor(input_fea).float()
