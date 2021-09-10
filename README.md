@@ -85,7 +85,7 @@ For the collected chromatin feature profiles, please see [chromatin_feature_prof
 
 Please see https://drive.google.com/drive/folders/1rI9WRPb_MwM36sW6AH7INC63Vo5fVelb?usp=sharing for the label data.
 
-The input sequence data can be generated using the codes below with the downloaded reference genome data 
+Our input sequence data can be generated using the codes below with the downloaded reference genome data 
 ```bash
 from util1 import generate_inputs
 import pickle
