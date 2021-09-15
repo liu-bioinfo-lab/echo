@@ -28,7 +28,7 @@ For the usage of ECHO, we make two examples [echo_example.ipynb](echo_example.ip
 
 Please see [echo_example.ipynb](echo_example.ipynb) for an example to calulate prediction scores for chromatin features on the central sequence, and attribution scores on the chromatin contacts and neighbor sequences.
 
-To perform your own analysis, you only need to provide an ATAC-seq file in (.bed) format. 
+To perform your own analysis, you only need to provide an ATAC-seq file in (.bed) format in GRCh38(hg38) version. 
 
 The chromatin contacts data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps. The trained models are stored in https://github.com/liu-bioinfo-lab/echo/tree/main/models.
 
@@ -52,10 +52,10 @@ curl -L -o hESC_Micro-C.zip "https://drive.google.com/uc?export=download&id=1aFK
 unzip hESC_Micro-C.zip
  -->
 
-Then, you can generate the input data ('inputs','neighs','input_sample_poi'). p.s. if your uploaded ATAC-seq data is GRCh37(hg19), it will be converted to GRCh38(hg38).
+Then, you can generate the input data ('inputs','neighs','input_sample_poi').
 ```bash
 from util import *
-inputs,input_sample_poi=generate_input(ATAC_seq_file,version='hg38')
+inputs,input_sample_poi=generate_input(ATAC_seq_file)
 neighs= generate_neighbors(input_sample_poi)
 ```
 
