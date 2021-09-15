@@ -28,7 +28,7 @@ For the usage of ECHO, we make two examples [echo_example.ipynb](echo_example.ip
 
 Please see [echo_example.ipynb](echo_example.ipynb) for an example to calulate prediction scores for chromatin features on the central sequence, and attribution scores on the chromatin contacts and neighbor sequences.
 
-To perform your own analysis, you only need to provide an ATAC-seq file in (.bed) format in GRCh38(hg38) version. 
+To perform your own analysis, you only need to provide an ATAC-seq file in [BED](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) format in GRCh38(hg38) version. 
 
 The chromatin contacts data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps. The trained models are stored in https://github.com/liu-bioinfo-lab/echo/tree/main/models.
 
