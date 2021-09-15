@@ -117,27 +117,23 @@ def echo_attribute(inputs,neighs,threshold):
         outputs[chr] = np.vstack(tempo)
     return outputs,att_neighs,att_contacts
 
-from pyliftover import LiftOver
-def process_bedfile(ATAC_file,version):
+def process_bedfile(ATAC_file):
     atac_align={}
-    lo = LiftOver('hg19', 'hg38')
-    if version not in ['hg19', 'hg38']:
-        raise ValueError('Invalid reference genome version Expected one of: %s'%(['hg19', 'hg38']))
     with open(ATAC_file,'r') as f:
         for line in f:
             content=line.strip().split('\t')
             try:
-                chromosome=int(content[0][3:])
-                if chromosome not in atac_align.keys():
-                    atac_align[chromosome]=set()
-                if version == 'hg19':
-                    s = lo.convert_coordinate('chr%s' % chromosome, int(content[1]))[0][1]
-                    e = lo.convert_coordinate('chr%s' % chromosome, int(content[2]))[0][1]
+                if 'chr' in content[0]:
+                    chromosome=int(content[0][3:])
                 else:
-                    s=int(content[1])
-                    e=int(content[2])
+                    chromosome=int(content[0])
             except Exception:
                 continue
+            if chromosome not in atac_align.keys():
+                atac_align[chromosome]=set()
+            s=int(content[1])
+            e=int(content[2])
+
             start=s//200*200
             end =(e//200+1)*200 if e%200 else e//200*200
             for loci in range(start,end,200):
@@ -156,8 +152,8 @@ def encoding(text):
     return encode_text
 
 
-def generate_input(ATAC_file,version='hg38'):
-    atac_align=process_bedfile(ATAC_file,version)
+def generate_input(ATAC_file):
+    atac_align=process_bedfile(ATAC_file)
     with open('echo_data/ref_genome_200bp.pickle', 'rb') as f:
         ref_genome = pickle.load(f)
     inputs = {}
