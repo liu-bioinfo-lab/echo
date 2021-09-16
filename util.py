@@ -17,7 +17,7 @@ class Dataset2(Dataset):
 
 
 
-def echo_attribute(inputs,neighs,threshold):
+def echo_attribute(inputs,neighs,threshold,attr_threshold,attribute_neigh=True,attribute_neigh_contact=True):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print(device)
     model = Expecto(2583, 1000, 2600)
@@ -49,17 +49,20 @@ def echo_attribute(inputs,neighs,threshold):
         for idx in range(centrals.shape[0]):
             central_idx = centrals[idx].item()
             att_contacts[chr][central_idx]={}
-            att_neighs[chr][central_idx] = {}
+            if attribute_neigh:
+                att_neighs[chr][central_idx] = {}
             for nidx in range(neighbor_idx.shape[1]):
                 if neighbor_idx[idx, nidx] == pad_idx:
                     continue
                 if neighbor_idx[idx, nidx] not in att_contacts[chr][central_idx].keys():
                     att_contacts[chr][central_idx][neighbor_idx[idx, nidx].item()]=grad_atts[idx,nidx].item()
-                    att_neighs[chr][central_idx][neighbor_idx[idx, nidx].item()] = grad_seq[idx, nidx,:,:]
+                    if attribute_neigh and grad_atts[idx, nidx]>attr_threshold:
+                        att_neighs[chr][central_idx][neighbor_idx[idx, nidx].item()] = grad_seq[idx, nidx,:,:]
                 else:
                     if grad_atts[idx,nidx]>att_contacts[chr][central_idx][neighbor_idx[idx, nidx]]:
                         att_contacts[chr][central_idx][neighbor_idx[idx, nidx].item()] = grad_atts[idx, nidx].item()
-                        att_neighs[chr][central_idx][neighbor_idx[idx, nidx].item()] = grad_seq[idx, nidx, :, :]
+                        if attribute_neigh and grad_atts[idx, nidx]>attr_threshold:
+                            att_neighs[chr][central_idx][neighbor_idx[idx, nidx].item()] = grad_seq[idx, nidx, :, :]
     for chr in inputs.keys():
         tempo = []
         pad_idx = inputs[chr].shape[0]
@@ -90,12 +93,16 @@ def echo_attribute(inputs,neighs,threshold):
             att1.retain_grad()
             att2.retain_grad()
             indices = (torch.sigmoid(out)[:, :882] > threshold).to(device)
+            if not attribute_neigh_contact:
+                tempo.append(torch.sigmoid(out).cpu().data.detach().numpy())
+                continue
             if torch.sum(indices)<1:
                 central_idx=test_x_idx.numpy()[0,-6]
                 att_contacts[chr][central_idx] = {}
                 att_contacts[chr][central_idx]['None'] = 1
-                att_neighs[chr][central_idx] = {}
-                att_neighs[chr][central_idx]['None'] = 1
+                if attribute_neigh:
+                    att_neighs[chr][central_idx] = {}
+                    att_neighs[chr][central_idx]['None'] = 1
                 tempo.append(torch.sigmoid(out).cpu().data.detach().numpy())
                 if step % 1000 == 0:
                     print("step:", '%04d' % (step + 1), "time=", "{:.5f}".format(time.time() - t)
@@ -115,10 +122,16 @@ def echo_attribute(inputs,neighs,threshold):
                 print("step:", '%04d' % (step + 1), "time=", "{:.5f}".format(time.time() - t)
                       )
         outputs[chr] = np.vstack(tempo)
-    return outputs,att_neighs,att_contacts
+    if not attribute_neigh_contact:
+        return outputs,None,None
+    elif not attribute_neigh:
+        return outputs,att_contacts,None
+    else:
+        return outputs,att_contacts,att_neighs
 
 def process_bedfile(ATAC_file):
     atac_align={}
+    print('atact file: '+ATAC_file)
     with open(ATAC_file,'r') as f:
         for line in f:
             content=line.strip().split('\t')
