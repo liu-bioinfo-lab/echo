@@ -94,7 +94,7 @@ def echo_attribute(inputs,neighs,threshold=0.2,attr_threshold=0.3,attribute_neig
             att2.retain_grad()
             indices = (torch.sigmoid(out)[:, :882] > threshold).to(device)
             if not attribute_neigh_contact:
-                tempo.append(torch.sigmoid(out).cpu().data.detach().numpy())
+                tempo.append(torch.sigmoid(out).cpu().data.detach().numpy().astype('float16'))
                 continue
             if torch.sum(indices)<1:
                 central_idx=test_x_idx.numpy()[0,-6]
@@ -103,7 +103,7 @@ def echo_attribute(inputs,neighs,threshold=0.2,attr_threshold=0.3,attribute_neig
                 if attribute_neigh:
                     att_neighs[chr][central_idx] = {}
                     att_neighs[chr][central_idx]['None'] = 1
-                tempo.append(torch.sigmoid(out).cpu().data.detach().numpy())
+                tempo.append(torch.sigmoid(out).cpu().data.detach().numpy().astype('float16'))
                 if step % 1000 == 0:
                     print("step:", '%04d' % (step + 1), "time=", "{:.5f}".format(time.time() - t)
                           )
@@ -117,7 +117,7 @@ def echo_attribute(inputs,neighs,threshold=0.2,attr_threshold=0.3,attribute_neig
             grad_seq = (input_xfea * input_xfea.grad.data).cpu().detach().numpy().reshape(test_x_idx.shape[0], 61, 4,
                                                                                           1000)
             process_data(pad_idx, test_x_idx.numpy(), np.abs(grad_seq), grad_atts, chr)
-            tempo.append(torch.sigmoid(out).cpu().data.detach().numpy())
+            tempo.append(torch.sigmoid(out).cpu().data.detach().numpy().astype('float16'))
             if step % 1000 == 0:
                 print("step:", '%04d' % (step + 1), "time=", "{:.5f}".format(time.time() - t)
                       )
