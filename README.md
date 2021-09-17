@@ -62,7 +62,7 @@ Finally, you can follow the steps demonstrated in [echo_example.ipynb](echo_exam
 
 Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for the other example to find common motif patterns in the nerighborhood for the inverstigated chromatin feature using [TF-MoDISco (Shrikumar et al.)](https://github.com/kundajelab/tfmodisco).
 
-Refer to the code below, if you want to train the model from scratch. 
+If you want to train the model from scratch, please refer to the code below,. 
 
 ```bash 
 python pre_train.py --lr=0.5 --pre_model=expecto --batchsize=64 --length=2600 --seq_length=1000
