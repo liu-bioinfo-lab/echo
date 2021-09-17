@@ -31,7 +31,7 @@ Please see [echo_example.ipynb](echo_example.ipynb) for an example to calulate p
 To perform your own analysis, you only need to provide an ATAC-seq file in [(BED)](https://genome.ucsc.edu/FAQ/FAQformat.html#format1) format with genome version of GRCh38 (hg38) and download the files below. 
 (The chromatin contact data will be provided by our 200-bp merged HFF and hESC Micro-C contact maps. The trained models are stored in https://github.com/liu-bioinfo-lab/echo/tree/main/models.)
 
-First, you need to download the Micro-C contact maps and GRCh38 reference genome data
+First, you need to download the processed Micro-C contact maps and GRCh38 reference genome data
 
 ```bash
 pip install gdown
