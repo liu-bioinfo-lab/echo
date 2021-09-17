@@ -7,18 +7,20 @@ from sklearn.preprocessing import normalize
 import numpy as np
 
 with open('chromatin_feature.pickle','rb') as f:
-  chromatin_feature=pickle.load(f)
+    chromatin_feature=pickle.load(f)
 def find_tf_idx(inspect_tf):
-  tf_indices=[]
-  for k in chromatin_feature.keys():
-    if inspect_tf.lower() == chromatin_feature[k].split('\t')[0].lower():
-      tf_indices.append(k)
-  return np.sort(tf_indices)
+    tf_indices=[]
+    for k in chromatin_feature.keys():
+        if inspect_tf.lower() == chromatin_feature[k].split('\t')[0].lower():
+            tf_indices.append(k)
+    if not tf_indices:
+        raise ValueError("no such chromatin feature")
+    return np.sort(tf_indices)
 
 def find_binding_locs(inspect_tf,labels,chr):
-  tf_indices=find_tf_idx(inspect_tf)
-  bind_locs=np.where(np.sum(labels[chr][:,tf_indices],1)>0)[0]
-  return bind_locs
+    tf_indices=find_tf_idx(inspect_tf)
+    bind_locs=np.where(np.sum(labels[chr][:,tf_indices],1)>0)[0]
+    return bind_locs
 
 one_hot_dic={'a':0,'c':1,'g':2,'t':3}
 def encoding(text):
@@ -87,7 +89,7 @@ def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_
     for chr in inputs.keys():
         pad_idx = inputs[chr].shape[0]
         binding_locs = find_binding_locs(inspect_tf, labels, chr)
-        print('%s binding sites are found'%binding_locs.shape[0])
+        print('%s binding sites are found in chromosome %s'%(binding_locs.shape[0],chr))
         dataloader = DataLoader(dataset=Dataset2(neighs, chr, binding_locs), batch_size=1, shuffle=False, num_workers=2)
 
         input_fea = inputs[chr]
@@ -145,5 +147,5 @@ def filter_sequence(inputs, neighs, labels,input_sample_poi, inspect_tf,contact_
             num_sequences += len(filter_seq)
             sequence_grad.append(grads)
             sequence_input.append(input_seq)
-            print('%s sequences are found' % num_sequences)
+            print('%s neighbor sequences are found' % num_sequences)
     return np.vstack(sequence_grad), np.vstack(sequence_input)
