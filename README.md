@@ -24,14 +24,6 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 
 ## Usage
 
-Then, you can generate the input data ('inputs', 'neighs', 'input_sample_poi') using the code below.
-```bash
-from util import *
-inputs,input_sample_poi=generate_input(ATAC_seq_file)
-neighs= generate_neighbors(input_sample_poi)
-```
-
-Finally, you can follow the steps demonstrated in [echo_example.ipynb](echo_example.ipynb). -->
 
 Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for an example to find common motif patterns in the nerighborhood for the inverstigated chromatin feature using [TF-MoDISco (Shrikumar et al.)](https://github.com/kundajelab/tfmodisco).
 
