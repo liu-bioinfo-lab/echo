@@ -47,9 +47,9 @@ python attribution_contact.py --chromatin_feature=h3k4me3 --cell_line=gm12878
 
 For the collected chromatin feature profiles, please see [chromatin_feature_profiles.xlsx](https://github.com/liu-bioinfo-lab/echo/blob/main/doc/chromatin_feature_profiles.xlsx)
 
-Please see https://drive.google.com/drive/folders/1rI9WRPb_MwM36sW6AH7INC63Vo5fVelb?usp=sharing for the label data.
+<!-- Please see https://drive.google.com/drive/folders/1rI9WRPb_MwM36sW6AH7INC63Vo5fVelb?usp=sharing for the label data.
 
-<!-- Our input sequence data can be generated using the codes below with the downloaded reference genome data 
+Our input sequence data can be generated using the codes below with the downloaded reference genome data 
 ```bash
 from util1 import generate_inputs
 import pickle
