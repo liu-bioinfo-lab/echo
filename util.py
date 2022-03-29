@@ -16,7 +16,6 @@ class Dataset2(Dataset):
         return self.num
 
 
-
 def echo_attribute(inputs,neighs,threshold=0.2,attr_threshold=0.3,attribute_neigh=True,attribute_neigh_contact=True):
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     print(device)
@@ -129,32 +128,6 @@ def echo_attribute(inputs,neighs,threshold=0.2,attr_threshold=0.3,attribute_neig
     else:
         return outputs,att_contacts,att_neighs
 
-def process_bedfile(ATAC_file):
-    atac_align={}
-    print('atact file: '+ATAC_file)
-    with open(ATAC_file,'r') as f:
-        for line in f:
-            content=line.strip().split('\t')
-            try:
-                if 'chr' in content[0]:
-                    chromosome=int(content[0][3:])
-                else:
-                    chromosome=int(content[0])
-            except Exception:
-                continue
-            if chromosome not in atac_align.keys():
-                atac_align[chromosome]=set()
-            s=int(content[1])
-            e=int(content[2])
-
-            start=s//200*200
-            end =(e//200+1)*200 if e%200 else e//200*200
-            for loci in range(start,end,200):
-                atac_align[chromosome].add(loci)
-    for i in atac_align.keys():
-        temp=np.sort(list(atac_align[i]))
-        atac_align[i]=temp
-    return atac_align
 
 one_hot_dic={'a':0,'c':1,'g':2,'t':3}
 def encoding(text):
@@ -165,28 +138,7 @@ def encoding(text):
     return encode_text
 
 
-def generate_input(ATAC_file):
-    atac_align=process_bedfile(ATAC_file)
-    with open('echo_data/ref_genome_200bp.pickle', 'rb') as f:
-        ref_genome = pickle.load(f)
-    inputs = {}
-    for chr in atac_align.keys():
-        input_sequence = []
-        temps = []
-        for idx in atac_align[chr]:
-            temp = []
-            try:
-                for i in range(-2, 3):
-                    temp.append(encoding(ref_genome[chr][idx + 200 * i]))
-            except Exception:
-                continue
-            temp1 = np.hstack([i for i in temp])
-            temps.append(temp1)
-            input_sequence.append(idx)
-        atac_align[chr] = np.array(input_sequence)
-        inputs[chr] = np.array(temps,dtype=np.int8)
-        print(atac_align[chr].shape, inputs[chr].shape)
-    return inputs,atac_align
+
 
 def build_graph(input_samples,datas,chr,cl):
     sample_dic={}
@@ -264,6 +216,8 @@ def generate_neighbors(input_sample_poi):
         neighs[chr] = np.array(temp_list)
     return neighs
 
+
+# copied from https://github.com/kundajelab/tfmodisco/blob/master/modisco/visualization/viz_sequence.py
 import matplotlib
 import matplotlib.pyplot as plt
 
