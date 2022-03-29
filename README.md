@@ -25,7 +25,7 @@ ECHO (Epigenomic feature analyzer with 3D CHromatin Organization), a graph neura
 ## Usage
 
 
-Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for an example to find common motif patterns in the nerighborhood for the inverstigated chromatin feature using [TF-MoDISco (Shrikumar et al.)](https://github.com/kundajelab/tfmodisco). Please refer to attribute_central_sequence.py for calculating the attribution scores of the central sequence which can be used to generate binding motifs by using TF-MoDISco.
+Please see [neighborhood_motif.ipynb](neighborhood_motif.ipynb) for an example to find common motif patterns in the nerighborhood for the inverstigated chromatin feature using [TF-MoDISco (Shrikumar et al.)](https://github.com/kundajelab/tfmodisco). Please refer to attribute_central_sequence.py for calculating the attribution scores of the central sequences which can be used to generate binding motifs by using TF-MoDISco.
 
 If you want to train the model from scratch, please refer to the code below,. 
 
